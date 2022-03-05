@@ -1,0 +1,56 @@
+Node *merge(Node *head1, Node *head2){
+Node*fh=NULL;
+Node*ft=NULL;
+if(head1==NULL){
+return head2;
+}
+if(head2==NULL){
+return head1;
+}
+if(head1==NULL && head2==NULL){
+return fh;
+}
+Node*t1= head1;
+Node*t2= head2;
+Node*tail=NULL;
+if(t1->data<t2->data){
+fh=t1;
+ft=t1;
+t1=t1->bottom;
+}
+else{
+fh=t2;
+ft=t2;
+t2=t2->bottom;
+}
+while(t1!=NULL && t2!=NULL){
+if(t1->data<t2->data){
+ft->bottom=t1;
+ft=ft->bottom;
+t1=t1->bottom;
+}
+else{
+ft->bottom=t2;
+ft=ft->bottom;
+t2=t2->bottom;
+}
+}
+if(t1!=NULL){
+ft->bottom=t1;
+}
+if(t2!=NULL){
+ft->bottom=t2;
+}
+return fh;
+}
+
+Node *flatten(Node *root)
+{
+if(root==NULL||root->next==NULL){
+return root;
+}
+Node*temp=root;
+root->next=flatten(root->next);
+Node*ans=merge(root,root->next);
+return ans;
+}
